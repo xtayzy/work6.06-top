@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p style="color: deeppink">{{ error }}</p>
+        {% endfor %}
+        <p>{{ field.label }}: {{ field }}<p>
+    {% endfor %}
+    <button>Зарегистрироваться</button>
+</form>
+</body>
+</html>
+

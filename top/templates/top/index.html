@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .form form {
+            margin-bottom: 40px;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid black;
+            padding: 5px;
+            max-width: 150px;
+        }
+
+        .tops {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="block">
+    <a href="{% url 'logout_page' %}">выйти</a>
+    <div class="form">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p style="color: deeppink">{{ error }}</p>
+                {% endfor %}
+                <p>{{ field.label }}: {{ field }}<p>
+            {% endfor %}
+            <button>Добавить</button>
+        </form>
+    </div>
+    <div class="tops">
+        {% for top in tops %}
+        <div class="top">
+            <div>
+                <img src="{{ top.image.url}}" alt="" style="width: 150px; height: 150px">
+            </div>
+            <div>
+                title: {{ top.title }}
+            </div>
+            <div>
+                description: {{ top.description }}
+            </div>
+            <div>
+                category: {{ top.category }}
+            </div>
+            <div>
+                types: {% for type in top.types.all %} {{ type.name }} {% endfor %}
+            </div>
+            <div>
+                <a href="{% url 'delete' pk=top.pk %}">удалить</a>
+            </div>
+            <div>
+                <a href="{% url 'edit' pk=top.pk %}">edit</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
+
+
